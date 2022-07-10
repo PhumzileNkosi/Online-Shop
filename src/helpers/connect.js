@@ -1,10 +1,12 @@
+require('dotenv').config();
 const mysql = require('mysql')
 
-let connection = mysql.createConnection({
-    host: 'onlineshopdb.cvwsebtgmvlx.af-south-1.rds.amazonaws.com',
-    user: 'onlineshopDB',
-    password: 'onlineshopDB',
-    database: 'onlineshopDB'
+let connection = mysql.createConnection(
+    {
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB
 });
 
 let connect = function(err) {
@@ -39,7 +41,7 @@ let getProductsByName = function(name) {
 
 }
 
-let addProductToCart = function(cartID, userID, product) {
+let addProductToCart = function(cartID, userID, qunatity) {
 
 }
 

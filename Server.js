@@ -1,21 +1,25 @@
-const express = require("express");
+
 const { auth, requiresAuth } = require('express-openid-connect');
+const express = require("express");
 const https = require("https");
 const fs= require("fs");
 const path = require("path");
+require('dotenv').config();
 const connect = require('./src/helpers/connect');
 const service = require('./src/helpers/service');
+
 const app = express();
 
 const config = {
+
   authRequired: false,
   auth0Logout: true,
-  baseURL: 'https://localhost:3000',
-  clientID: 'lUy3AxODtmbFmgC0QJfUFdVwXN5WzzJx',
-  issuerBaseURL: 'https://dev-3t-yarx7.us.auth0.com',
-  secret: 'h8rpOnYCSVnJJs7g6Wbw10rejR2W9Di5hs78hQJ69SUNwcqz7C'
+  baseURL: process.env.BASE_URL,
+  clientID: process.env.CLIENT_ID,
+  issuerBaseURL: process.env.ISSUER_BASE_URL,
+  secret: process.env.SECRET_KEY
+  
 };
-
 
 const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname,'/public/')))
