@@ -20,7 +20,7 @@ let connect = function(err) {
 const getAllProducts = function(){
     return new Promise(function(resolve, reject){
       connection.query(
-          "SELECT ProductID, Name, Price, Quantity FROM Product", 
+          "SELECT BIN_TO_UUID(ProductID) AS Product_ID, Name,Description, Price, Quantity FROM Product", 
           function(err, rows){                                                
               if(rows === undefined){
                   reject(new Error("Error rows is undefined"));

@@ -40,7 +40,7 @@ app.get('/', (req,res)=>{
   service.getAllProducts()
     .then(function(results){
         res.render("pages/home", {
-          title: 'Online Store Grad Project',
+          title: 'Online Store ',
           isAuthenticated: req.oidc.isAuthenticated(),
           user: req.oidc.user,
           products: results
