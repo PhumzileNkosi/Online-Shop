@@ -28,7 +28,7 @@ https.createServer(
       cert: fs.readFileSync("./cert.pem"),
   },
   app).listen(PORT, ()=>{
-  console.log(`server is runing at port ${PORT}`)
+  console.log(`server is running at port ${PORT}`)
 });
 
 app.get('/', (req,res)=>{

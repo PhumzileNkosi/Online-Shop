@@ -58,11 +58,13 @@ nav{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 2em;
   background-color: #f1f1f1;
+  min-height: 22em;
+  max-height: 22em;
 }
 
 .card .productImg{
   width: -webkit-fill-available;
-  margin: -2em;
+  margin: -2em -2em 0 -2em;
 }
 
 .card .cartImg{
@@ -71,11 +73,9 @@ nav{
 }
 
 .cardHeading{
-  color: white;
   word-wrap: break-word;
-  font-size: large;
+  font-size: medium;
   font-weight: bold;
-  text-align: right;
 }
 
 .cardPrice{
@@ -91,7 +91,7 @@ nav{
 /* Float four columns side by side */
 .column {
   float: left;
-  width: 15%;
+  width: 20%;
   padding: 0 10px;
 }
 
@@ -115,13 +115,20 @@ nav{
 @media only screen and (max-width: 700px) {
   .column {
     width: 50%;
-    margin-bottom: 20px;
+  }
+
+  .card{
+    max-height: 25em;
   }
 }
 
 @media only screen and (max-width: 600px) {
   .column {
     width: 100%;
-    margin-bottom: 20px;
+    
+  }
+
+  .card{
+    max-height: 30em;
   }
 }
