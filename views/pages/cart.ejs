@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/styling/home.css">
+    <script  type="module"  src="js/home.js"></script>
+  </head>
+  <body>
+
+
+    <div class="topnav">
+      <nav>
+        <% if(!isAuthenticated) { %>
+          <a href="/login/">Login</a>
+        <% } else { %>
+          <a href="/logout/">Logout</a>
+          <a href="/">Home </a>
+          <div id="profileInfo">
+            <p class="name">
+              <%= user.nickname.charAt(0).toUpperCase() + user.nickname.slice(1) %>
+            </p>
+            <a href="/profile"><img src="<%= user.picture %>" id="img"></a>
+          </div>
+        <% } %>
+      </nav>
+    </div>
+
+    <h1><%= title %></h1>
+    <h2>User <%= user.sub %></h2>
+
+    <!-- Remove this later -->
+    <!-- <pre><%= JSON.stringify(user, null, 2) %></pre> -->
+    <!---->
+
+
+   </body>
+</html>

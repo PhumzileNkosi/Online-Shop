@@ -15,16 +15,21 @@ let connect = function(err) {
     console.log( "success")
 }
 
-let getAllProducts =function() {
-    const sqlQuery='select * from Product'
-    connection.query(sqlQuery, (error, results, fields) => {
-        if (error) {
-        return console.error(error.message);
-        }
-        const resultJSON =JSON.parse(JSON.stringify(results));
-        console.log(resultJSON);
-    });
-}
+const getAllProducts = function(){
+    return new Promise(function(resolve, reject){
+      connection.query(
+          "SELECT ProductID, Name, Price, Quantity FROM Product", 
+          function(err, rows){                                                
+              if(rows === undefined){
+                  reject(new Error("Error rows is undefined"));
+              }else{
+                  resolve(rows);
+              }
+          }
+      )}
+)}
+
+
 
 let getProductById = function(id) {
 
@@ -49,6 +54,5 @@ let removeProductFromCart = function (cartID, productID) {
 let checkoutCart = function(cartID, userID) {
 
 }
-
 
 module.exports ={connect:connect, getAllProducts: getAllProducts}
