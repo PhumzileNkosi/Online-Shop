@@ -1,28 +1,62 @@
 const express = require("express");
+const { auth, requiresAuth } = require('express-openid-connect');
 const https = require("https");
 const fs= require("fs");
 const path = require("path");
 const connect = require('./src/helpers/connect');
+const service = require('./src/helpers/service');
 const app = express();
+
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  baseURL: 'https://localhost:3000',
+  clientID: 'lUy3AxODtmbFmgC0QJfUFdVwXN5WzzJx',
+  issuerBaseURL: 'https://dev-3t-yarx7.us.auth0.com',
+  secret: 'h8rpOnYCSVnJJs7g6Wbw10rejR2W9Di5hs78hQJ69SUNwcqz7C'
+};
 
 
 const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname,'/public/')))
-https.createServer(
+app.set('view engine', 'ejs');
+app.use(auth(config));
 
+https.createServer(
   {
       key: fs.readFileSync("./key.pem"),
       cert: fs.readFileSync("./cert.pem"),
   },
   app).listen(PORT, ()=>{
-  console.log(`server is runing at port ${PORT}`)
+  console.log(`server is running at port ${PORT}`)
 });
 
 app.get('/', (req,res)=>{
- res.sendFile(__dirname + '/public/home.html');
 
-// res.set('Content-Type', 'text/html');
-// res.send(Buffer.from(`<h2>${connect.getAllProducts()}</h2>`));
- 
+  service.getAllProducts()
+    .then(function(results){
+        res.render("pages/home", {
+          title: 'Online Store Grad Project',
+          isAuthenticated: req.oidc.isAuthenticated(),
+          user: req.oidc.user,
+          products: results
+        })
+    })
+    .catch(function(err){
+      console.log("Promise rejection error: "+err);
+    })
 })
 
+
+app.get('/profile', requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user, null, 2));
+});
+
+
+app.get('/cart', requiresAuth(), (req, res) => {
+  res.render(path.join(__dirname, 'views/pages/cart.ejs'), {
+    title: 'Cart Page',
+    isAuthenticated: req.oidc.isAuthenticated(),
+    user: req.oidc.user
+  })
+});

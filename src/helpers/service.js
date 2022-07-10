@@ -5,7 +5,16 @@ const connect = require('./connect');
 //also used to extract parameters from request for db queries
 
 const getAllProducts = () => {
-    return connect.getAllProducts()
+    
+    return new Promise(function(resolve, reject){
+        connect.getAllProducts()
+        .then(function(results){
+            resolve(results) ; 
+        })
+        .catch(function(err){
+            reject(err);
+        }
+    )})
 }
 
-module.exports = {getAllProducts:getAllProducts}
+module.exports ={getAllProducts: getAllProducts}
