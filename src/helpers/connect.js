@@ -38,7 +38,18 @@ let getProductById = function(id) {
 }
 
 let getProductsByName = function(name) {
-
+    return new Promise(function(resolve, reject){
+        connection.query(
+            "SELECT * FROM Product where Name='"+name +"';", 
+            function(err, rows){                                                
+                if(rows === undefined){
+                    reject(err.message + "At connect.js line 40 func 'getProductsByName'");
+                }else{
+                    resolve(rows);
+                }
+            }
+        )}
+  )
 }
 
 let addProductToCart = function(cartID, userID, qunatity) {
@@ -57,4 +68,4 @@ let checkoutCart = function(cartID, userID) {
 
 }
 
-module.exports ={connect:connect, getAllProducts: getAllProducts}
+module.exports ={connect:connect, getAllProducts: getAllProducts, getProductsByName: getProductsByName }
