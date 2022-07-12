@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 require('dotenv').config();
 const connect = require('./src/helpers/connect');
 const service = require('./src/helpers/service');
+const helmet = require('helmet')
 
 const jsonParser = bodyParser.json()
 const app = express();
@@ -27,6 +28,17 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname,'/public/')))
 app.set('view engine', 'ejs');
 app.use(auth(config));
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      "img-src": ["'self'",
+                  "https://s.gravatar.com",
+                  "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
+    }
+  },
+  crossOriginEmbedderPolicy: false
+}))
+app.disable('x-powered-by')
 
 https.createServer(
   {
