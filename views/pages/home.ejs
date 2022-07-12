@@ -2,6 +2,7 @@
   <head>
     <title><%= title %></title>
     <link rel="stylesheet" type="text/css" href="/styling/home.css">
+    <link rel="stylesheet" type="text/css" href="/styling/header.css">
     <script  type="module"  src="js/home.js"></script>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
   </head>
@@ -19,7 +20,7 @@
             <p class="name">
               <%= user.nickname.charAt(0).toUpperCase() + user.nickname.slice(1) %>
             </p>
-            <a href="/profile"><img src="<%= user.picture %>" id="img"></a>
+            <img src="<%= user.picture %>" id="img">
           </div>
         <% } %>
       </nav>

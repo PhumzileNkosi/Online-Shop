@@ -1,0 +1,92 @@
+body{
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h1{
+    margin-left: 2em;
+  }
+  
+  h2{
+    margin-left: 2.5em;
+  }
+  
+  
+  h2{
+    color: blueviolet;
+  }
+
+.column{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: #f1f1f1;
+  min-height: 12em;
+  max-height: 12em;
+
+  margin:2em;
+}
+
+.rightPanel{
+    margin-left: 2em;
+    padding:1em;
+    word-break: break-word;
+}
+
+.productImg{
+    width: 12em;
+    height: 12em;
+}
+
+.cardHeading{
+    font-weight: bold;
+    font-size: medium;
+}
+
+.cardDescription{
+    font-size: small;
+    color: gray;
+}
+
+.minusItem{
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: large;
+}
+
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    left: 50%;
+    margin-left: -60px;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }

@@ -52,11 +52,6 @@ app.get('/', (req,res)=>{
 })
 
 
-app.get('/profile', requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user, null, 2));
-});
-
-
 app.get('/cart', requiresAuth(), (req, res) => {
   res.render(path.join(__dirname, 'views/pages/cart.ejs'), {
     title: 'Cart Page',
@@ -66,7 +61,7 @@ app.get('/cart', requiresAuth(), (req, res) => {
 });
 
 
-app.get('/products', requiresAuth() , (req, res) => {
+app.get('/api/products', requiresAuth() , (req, res) => {
 
     service.getAllProducts()
     .then(function(results){ 
@@ -79,7 +74,7 @@ app.get('/products', requiresAuth() , (req, res) => {
 
 });
 
-app.put('/cart', requiresAuth(), jsonParser , (req, res) => {
+app.put('/api/cart', requiresAuth(), jsonParser , (req, res) => {
 
   let request = {
     item : req.body.item,
@@ -93,3 +88,17 @@ app.put('/cart', requiresAuth(), jsonParser , (req, res) => {
 
 
 })
+
+
+app.get('/api/cart', requiresAuth() , (req, res) => {
+
+  service.getCart(req.oidc.user.sub)
+  .then(function(results){ 
+     res.json(results)
+  })
+  .catch(function(err){
+    console.log("Promise rejection error: "+err);
+    res.status(500)
+  })
+
+});

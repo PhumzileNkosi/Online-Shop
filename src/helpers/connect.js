@@ -46,7 +46,20 @@ let addProductToCart = function(cartID, userID, qunatity) {
 }
 
 let getUserCart = function (userID) {
-
+    return new Promise(function(resolve, reject){
+        connection.query(
+            `SELECT BIN_TO_UUID(p.ProductID) AS Product_ID, p.Name, p.Description, p.Price, cp.Quantity 
+             FROM Product p 
+             INNER JOIN Cart_Product cp ON cp.ProductID = p.ProductID
+             WHERE cp.SubjectID = '${userID}' `, 
+            function(err, rows){                                              
+                if(!rows ){
+                    reject(new Error("Error rows is undefined"));
+                }else{
+                    resolve(rows);
+                }
+            }
+        )})
 }
 
 let removeProductFromCart = function (cartID, productID) {
@@ -57,4 +70,4 @@ let checkoutCart = function(cartID, userID) {
 
 }
 
-module.exports ={connect:connect, getAllProducts: getAllProducts}
+module.exports ={connect:connect, getAllProducts: getAllProducts, getUserCart:getUserCart}
