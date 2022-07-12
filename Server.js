@@ -65,7 +65,7 @@ app.get('/cart', requiresAuth(), (req, res) => {
   })
 });
 
-app.get('api/products', requiresAuth(), (req,res)=>{
+app.get('/api/products', requiresAuth(), (req,res)=>{
 
   service.getProductsByName(req.query.name)
     .then(function(results){
