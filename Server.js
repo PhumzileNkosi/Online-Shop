@@ -4,10 +4,12 @@ const express = require("express");
 const https = require("https");
 const fs= require("fs");
 const path = require("path");
+const bodyParser = require('body-parser')
 require('dotenv').config();
 const connect = require('./src/helpers/connect');
 const service = require('./src/helpers/service');
 
+const jsonParser = bodyParser.json()
 const app = express();
 
 const config = {
@@ -43,7 +45,8 @@ app.get('/', (req,res)=>{
           title: 'Online Store ',
           isAuthenticated: req.oidc.isAuthenticated(),
           user: req.oidc.user,
-          products: results
+          products: results,
+          service: service
         })
     })
     .catch(function(err){
@@ -64,3 +67,32 @@ app.get('/cart', requiresAuth(), (req, res) => {
     user: req.oidc.user
   })
 });
+
+
+app.get('/products', requiresAuth() , (req, res) => {
+
+    service.getAllProducts()
+    .then(function(results){ 
+       res.json(results)
+    })
+    .catch(function(err){
+      console.log("Promise rejection error: "+err);
+      res.status(500)
+    })
+
+});
+
+app.put('/cart', requiresAuth(), jsonParser , (req, res) => {
+
+  let request = {
+    item : req.body.item,
+    quantity: req.body.quantity,
+    user: req.oidc.user.sub
+  }
+
+  console.log(request)
+
+  //Add validation on SQL side to check that the user has not inputted an invalid Quantity for item
+
+
+})
