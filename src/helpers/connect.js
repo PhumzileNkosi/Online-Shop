@@ -40,7 +40,7 @@ let getProductById = function(id) {
 let getProductsByName = function(name) {
     return new Promise(function(resolve, reject){
         connection.query(
-            "SELECT BIN_TO_UUID(ProductID) AS Product_ID, Name,Description, Price, Quantity FROM Product where Name='"+name +"';", 
+            "SELECT BIN_TO_UUID(ProductID) AS Product_ID, Name,Description, Price, Quantity FROM Product where Name='"+connection.escape(name) +"';", 
             function(err, rows){                                                
                 if(rows === undefined){
                     reject(err.message + "At connect.js line 40 func 'getProductsByName'");
