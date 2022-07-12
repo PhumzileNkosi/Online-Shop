@@ -33,6 +33,7 @@ app.use(helmet({
     directives: {
       "img-src": ["'self'",
                   "https://s.gravatar.com",
+                  "https://i0.wp.com/cdn.auth0.com/avatars/",
                   "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
     }
   },
