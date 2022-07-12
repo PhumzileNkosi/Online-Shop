@@ -110,3 +110,13 @@ app.get('/api/cart', requiresAuth() , (req, res) => {
   })
 
 });
+app.get('/api/products/search', requiresAuth(), (req,res)=>{
+  service.getProductsByName(req.query.name)
+    .then(function(results){
+      res.json(results);
+    })
+    .catch(function(err){
+      console.log("Promise rejection error: "+err);
+      res.status(500);
+    })
+});

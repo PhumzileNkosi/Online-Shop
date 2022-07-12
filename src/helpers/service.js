@@ -43,5 +43,16 @@ const addtoCart = (productID,subject, quantity) => {
         }
     )})
 }
-
-module.exports ={getAllProducts: getAllProducts, getCart:getCart, addtoCart}
+const getProductsByName = (name) => {
+    
+    return new Promise(function(resolve, reject){
+        connect.getProductsByName(name)
+        .then(function(results){
+            resolve(results) ; 
+        })
+        .catch(function(err){
+            reject(err);
+        }
+    )})
+}
+module.exports ={getAllProducts: getAllProducts, getCart:getCart, addtoCart, getProductsByName: getProductsByName}
