@@ -1,12 +1,14 @@
 
 window.addEventListener('load', (event) => {
     getAllProducts();
+
+    document.getElementById('searchButton').addEventListener('click', searchProduct) ; 
 });
 
 const getAllProducts = async () => {
     const response = await fetch('/api/products');
     const products = await response.json();
-    generateProductDisplay(products);
+    await generateProductDisplay(products);
 }
 
 
@@ -40,7 +42,7 @@ const getUpdateCart = async (event) => {
 }
 
 
-const generateProductDisplay = (products) => {
+const generateProductDisplay = async (products) => {
     let newHtml = '';
 
     products.forEach(product =>{
@@ -68,5 +70,36 @@ const generateProductDisplay = (products) => {
 
     const cartIcons  = document.querySelectorAll('.cartImg');
     cartIcons.forEach(el => el.addEventListener('click', (e)  => { getUpdateCart(e) }  ));
+
+
+    if(products.length > 0){
+        document.getElementById('information').innerHTML = '';
+    }else{
+        document.getElementById('information').innerHTML = 'No products to display';
+    }   
+
+    document.getElementById('searchButton').disabled = false;
+}
+
+
+const searchProduct = async () =>{
+    document.getElementById('searchButton').disabled = true;
+    
+    let search = document.getElementById('productSearch').value ;
+    
+    if(search.length > 0 ){
+        const response = await fetch('/api/products?' + new URLSearchParams({
+            name: search
+        }))
+
+        const products = await response.json();
+        await generateProductDisplay(products);
+        
+    }else{
+        document.getElementById('searchButton').disabled = false;
+    }
+
+
+
 }
 

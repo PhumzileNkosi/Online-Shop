@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="/styling/home.css">
     <link rel="stylesheet" type="text/css" href="/styling/header.css">
     <script  type="module"  src="js/home.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
   </head>
   <body>
@@ -31,6 +32,12 @@
       <h2>Log in to start your online shopping experience</h2>
     <% } else { %>
       <section class="productSection">
+        <span>
+          <input type="text" id="productSearch" placeholder="Search Product">
+          <button id="searchButton"><i class="fa fa-search" aria-hidden="true"></i></button>
+          <h2 id="information"></h2>
+        </span>
+        
         <section class="row" id="productsRow"></section>
       </section>
     <% } %>
