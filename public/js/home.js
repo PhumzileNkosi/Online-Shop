@@ -88,7 +88,7 @@ const searchProduct = async () =>{
     let search = document.getElementById('productSearch').value ;
     
     if(search.length > 0 ){
-        const response = await fetch('/api/products?' + new URLSearchParams({
+        const response = await fetch('/api/products/search?' + new URLSearchParams({
             name: search
         }))
 

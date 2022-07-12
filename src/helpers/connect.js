@@ -38,7 +38,18 @@ let getProductById = function(id) {
 }
 
 let getProductsByName = function(name) {
-
+    return new Promise(function(resolve, reject){
+        connection.query(
+            "SELECT BIN_TO_UUID(ProductID) AS Product_ID, Name,Description, Price, Quantity FROM Product where Name='"+name +"';", 
+            function(err, rows){                                                
+                if(rows === undefined){
+                    reject(err.message + "At connect.js line 40 func 'getProductsByName'");
+                }else{
+                    resolve(rows);
+                }
+            }
+        )}
+  )
 }
 
 let addProductToCart = function(cartID, userID, qunatity) {
@@ -88,4 +99,4 @@ let addToCartNew = function(productID, subject, quantity) {
     )
 }
 
-module.exports ={connect:connect, getAllProducts: getAllProducts, getUserCart:getUserCart, addToCartNew}
+module.exports ={connect:connect, getAllProducts: getAllProducts, getUserCart:getUserCart, addToCartNew, getProductsByName: getProductsByName}
