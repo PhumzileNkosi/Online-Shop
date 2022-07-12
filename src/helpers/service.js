@@ -1,3 +1,4 @@
+const { response } = require('express');
 const connect = require('./connect');
 
 //This unit is responsible for db quqries results messaging to mee the the business requirements.
@@ -17,4 +18,15 @@ const getAllProducts = () => {
     )})
 }
 
-module.exports ={getAllProducts: getAllProducts}
+const addtoCart = (productID,subject, quantity) => {
+    return new Promise(function(resolve, reject){
+        connect.addToCartNew(productID,subject,quantity)
+        .then(function(results){
+            resolve(results) ; 
+        })
+        .catch(function(err){
+            reject(err);
+        }
+    )})
+}
+module.exports ={getAllProducts: getAllProducts, addtoCart}

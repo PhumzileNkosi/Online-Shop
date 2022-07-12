@@ -5,7 +5,7 @@ CREATE TABLE User_Subject (
 );
 
 CREATE TABLE `Cart` (
-  `CartID` Binary(16) Default (uuid_to_bin(uuid())) NOT NULL,
+  `CartID` Binary(16) Default (uuid_to_bin(uuid())) UNIQUE NOT NULL,
   `UserSubject` Varchar(100),
   `Date` Date,
   `Total` Float,

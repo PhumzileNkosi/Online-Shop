@@ -64,3 +64,34 @@ app.get('/cart', requiresAuth(), (req, res) => {
     user: req.oidc.user
   })
 });
+
+
+app.get('/products', requiresAuth() , (req, res) => {
+
+    service.getAllProducts()
+    .then(function(results){ 
+       res.json(results)
+    })
+    .catch(function(err){
+      console.log("Promise rejection error: "+err);
+      res.status(500)
+    })
+
+});
+
+app.put('/cart', requiresAuth(), jsonParser , (req, res) => {
+
+  let request = {
+    productID : req.body.item,
+    quantity: req.body.quantity,
+    subject: req.oidc.user.sub
+  }
+  service.addtoCart(request.productID, request.subject, request.quantity)
+    .then(function(results){
+       res.json(results)
+    })
+    .catch(function(err){
+      console.log("Promise rejection error: "+err);
+      res.status(500)
+    })
+})
