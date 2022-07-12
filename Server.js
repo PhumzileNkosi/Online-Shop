@@ -102,3 +102,13 @@ app.get('/api/cart', requiresAuth() , (req, res) => {
   })
 
 });
+
+app.put('/api/cart/:productID/:userID', (req, res) => {
+  service.removeProductFromCart(req.params.userID, req.params.productID)
+  .then(function(results){
+    res.json(results)
+  })
+  .catch(function(err){
+    console.log("Promise reject error: " + err);
+  })
+})

@@ -62,12 +62,24 @@ let getUserCart = function (userID) {
         )})
 }
 
-let removeProductFromCart = function (cartID, productID) {
-
+let removeProductFromCart = function (subjectID, productID) {
+    return new Promise(function(resolve, reject) {
+        connection.query(`UPDATE Cart_Product
+        SET Quantity = Quantity - 1
+        WHERE SubjectID ='${subjectID}' AND ProductID = UUID_TO_BIN('${productID}')`,
+        function(err, rows) {
+            if (rows === undefined) {
+                reject(new Error("Error rows is undefined"));
+            }else {
+                resolve(rows);
+            }
+        }
+        )}
+    )
 }
 
 let checkoutCart = function(cartID, userID) {
 
 }
 
-module.exports ={connect:connect, getAllProducts: getAllProducts, getUserCart:getUserCart}
+module.exports ={connect:connect, getAllProducts: getAllProducts, getUserCart:getUserCart, removeProductFromCart: removeProductFromCart}
