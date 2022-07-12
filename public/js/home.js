@@ -3,6 +3,13 @@ window.addEventListener('load', (event) => {
     getAllProducts();
 
     document.getElementById('searchButton').addEventListener('click', searchProduct) ; 
+
+
+    document.getElementById('productSearch').addEventListener('keyup', (event) => {
+        if (event.target.value.length == 0 ){
+            getAllProducts();
+        }
+    }) ; 
 });
 
 const getAllProducts = async () => {
@@ -29,10 +36,7 @@ const getUpdateCart = async (event) => {
 
         fetch('/api/cart', requestOptions)
         .then(async response => {
-            response.json();
-            console.log(response.json())
 
-            
         })
         .catch(error => {
             element.parentElement.innerHTML = `Error: ${error}`;
