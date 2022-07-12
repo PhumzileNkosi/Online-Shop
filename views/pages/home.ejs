@@ -27,32 +27,13 @@
     </div>
 
     <h1><%= title %></h1>
-    <button id="loadProducts">Load All Products</button>
-
-    <!-- Remove this later -->
-    <!-- <pre><%= JSON.stringify(user, null, 2) %></pre> -->
-    <!---->
-
-    <section class="productSection">
-      <div class="row">
-        <% products.forEach(function(product){ %>
-          <div class="column">
-            <div class="card">
-              <img class="productImg" src="/images/placeholder.png">
-              <label class="cardHeading"><%= product.Name %></label>
-              <p class="cardPrice">R<%= product.Price %></p>
-              <p class="cardQuantity">Quantity <%= product.Quantity %></p>
-              <img class="cartImg" src="/images/cart.png" data-product="<%= product.Name %>" data-product-id="<%= product.Product_ID %>">
-              <input type="number" id="quantity-<%= product.Product_ID %>" name="quantity" min="1" max="<%= product.Quantity %>" value="1"
-              onKeyUp="if(this.value > <%= product.Quantity %> ){this.value='<%= product.Quantity %>';}else if(this.value<1){this.value='1';}"
-              >
-            </div>
-          </div>
-        <% }); %>
-      </div>
-    </section>
-
-
+    <% if (!isAuthenticated) { %>
+      <h2>Log in to start your online shopping experience</h2>
+    <% } else { %>
+      <section class="productSection">
+        <section class="row" id="productsRow"></section>
+      </section>
+    <% } %>
 
    </body>
 </html>

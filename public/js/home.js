@@ -1,21 +1,12 @@
 
 window.addEventListener('load', (event) => {
-    console.log('page is fully loaded');
-
-    const cartIcons  = document.querySelectorAll('.cartImg');
-
-    cartIcons.forEach(el => el.addEventListener('click', (e)  => { getUpdateCart(e) }  ));
-
-    document.getElementById('loadProducts').addEventListener('click', getAllProducts)
-
-
-
+    getAllProducts();
 });
 
 const getAllProducts = async () => {
     const response = await fetch('/api/products');
-    const myJson = await response.json();
-    console.log(myJson)
+    const products = await response.json();
+    generateProductDisplay(products);
 }
 
 
@@ -46,5 +37,36 @@ const getUpdateCart = async (event) => {
             console.error('There was an error!', error);
         });
    
+}
+
+
+const generateProductDisplay = (products) => {
+    let newHtml = '';
+
+    products.forEach(product =>{
+        newHtml += `
+        <div class="column">
+        <div class="card">
+          <img class="productImg" src="/images/placeholder.png">
+          <label class="cardHeading">${product.Name}</label>
+          <p class="cardPrice">R${product.Price}</p>
+          <p class="cardQuantity">Available: ${ product.Quantity }</p>
+          <div class="tooltip">
+            <img class="cartImg" src="/images/cart.png" data-product="${product.Name }" data-product-id="${product.Product_ID}">
+            <span class="tooltiptext">Add To Cart</span>
+          </div>
+          <input type="number" id="quantity-${product.Product_ID}" name="quantity" min="1" max="${product.Quantity }" value="1"
+          onKeyUp="if(this.value > ${product.Quantity }){this.value='${ product.Quantity }';}else if(this.value<1){this.value='1';}"
+          >
+        </div>
+      </div>
+        `
+    })
+
+    document.getElementById('productsRow').innerHTML = newHtml ;
+
+
+    const cartIcons  = document.querySelectorAll('.cartImg');
+    cartIcons.forEach(el => el.addEventListener('click', (e)  => { getUpdateCart(e) }  ));
 }
 

@@ -38,20 +38,17 @@ https.createServer(
 });
 
 app.get('/', (req,res)=>{
-
   service.getAllProducts()
-    .then(function(results){
-        res.render("pages/home", {
-          title: 'Online Store ',
-          isAuthenticated: req.oidc.isAuthenticated(),
-          user: req.oidc.user,
-          products: results,
-          service: service
-        })
-    })
-    .catch(function(err){
-      console.log("Promise rejection error: "+err);
-    })
+  .then(function(results){
+      res.render("pages/home", {
+        title: 'Online Store ',
+        isAuthenticated: req.oidc.isAuthenticated(),
+        user: req.oidc.user
+      })
+  })
+  .catch(function(err){
+    console.log("Promise rejection error: "+err);
+  })
 })
 
 
