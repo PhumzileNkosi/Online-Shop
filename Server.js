@@ -123,7 +123,7 @@ app.get('/api/cart', requiresAuth() , (req, res) => {
 
 });
 
-app.put('/api/cart/:productID', (req, res) => {
+app.put('/api/cart/:productID', requiresAuth(), (req, res) => {
   service.removeProductFromCart(req.oidc.user.sub, req.params.productID)
   .then(function(results){
     res.json(results)

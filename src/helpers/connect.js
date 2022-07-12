@@ -75,11 +75,6 @@ let getUserCart = function (userID) {
 }
 
 let removeProductFromCart = function (subjectID, productID) {
-    console.log("Connect")
-    console.log(subjectID, productID)
-    console.log(`UPDATE Cart_Product
-    SET Quantity = Quantity - 1
-    WHERE SubjectID ='${subjectID}' AND ProductID = UUID_TO_BIN('${productID}')`)
     return new Promise(function(resolve, reject) {
         connection.query(`UPDATE Cart_Product
         SET Quantity = Quantity - 1

@@ -53,13 +53,7 @@ const generateCartHtml = (products) => {
 
 const removeCartItem = async (event) => {
     let item = event.target.getAttribute("data-product-id") 
-
-    let bodyObject = {
-        "item" : item,
-    }
-
     const response = await fetch('/api/cart/' + item, {method: 'PUT'});
-    console.log(response.json())
     getUserCart()
 
     //Add code for removal
