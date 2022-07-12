@@ -65,18 +65,14 @@ app.get('/cart', requiresAuth(), (req, res) => {
   })
 });
 
-app.get('/products', requiresAuth(), (req,res)=>{
+app.get('api/products', requiresAuth(), (req,res)=>{
 
   service.getProductsByName(req.query.name)
     .then(function(results){
-        res.render("pages/home", {
-          title: 'Products By Name',
-          isAuthenticated: req.oidc.isAuthenticated(),
-          user: req.oidc.user,
-          products: results
-        })
+      res.json(results);
     })
     .catch(function(err){
       console.log("Promise rejection error: "+err);
+      res.status(500);
     })
 })
