@@ -1,18 +1,5 @@
 CREATE DATABASE onlineshopDB;
 
-CREATE TABLE User_Subject (
-`SubjectID` Varchar(100) PRIMARY KEY
-);
-
-CREATE TABLE `Cart` (
-  `CartID` Binary(16) Default (uuid_to_bin(uuid())) NOT NULL,
-  `UserSubject` Varchar(100),
-  `Date` Date,
-  `Total` Float,
-  PRIMARY KEY (`CartID`),
-  FOREIGN KEY (`UserSubject`) REFERENCES User_Subject(`SubjectID`)
-);
-
 CREATE TABLE `Product` (
   `ProductID` Binary(16) Default (uuid_to_bin(uuid())) UNIQUE NOT NULL,
   `Name` Varchar(50) NOT NULL,
@@ -23,12 +10,10 @@ CREATE TABLE `Product` (
 );
 
 CREATE TABLE `Cart_Product` (
-  `CartID`  Binary(16)  NOT NULL,
+  `SubjectID` Varchar(100)  NOT NULL,
   `ProductID` Binary(16) NOT NULL,
   `Quantity` Integer,
-  `CheckedOut` Boolean,
-  PRIMARY KEY (`CartID`, `ProductID`),
-  FOREIGN KEY (`CartID`) REFERENCES `Cart`(`CartID`),
+  PRIMARY KEY (`SubjectID`, `ProductID`),
   FOREIGN KEY (`ProductID`) REFERENCES `Product`(`ProductID`)
 );
 
