@@ -63,7 +63,7 @@ let getUserCart = function (userID) {
             `SELECT BIN_TO_UUID(p.ProductID) AS Product_ID, p.Name, p.Description, p.Price, cp.Quantity 
              FROM Product p 
              INNER JOIN Cart_Product cp ON cp.ProductID = p.ProductID
-             WHERE cp.SubjectID = '${userID}' `, 
+             WHERE cp.SubjectID = '${userID}' AND cp.Quantity > 0`, 
             function(err, rows){                                              
                 if(!rows ){
                     reject(new Error("Error rows is undefined"));
@@ -75,6 +75,11 @@ let getUserCart = function (userID) {
 }
 
 let removeProductFromCart = function (subjectID, productID) {
+    console.log("Connect")
+    console.log(subjectID, productID)
+    console.log(`UPDATE Cart_Product
+    SET Quantity = Quantity - 1
+    WHERE SubjectID ='${subjectID}' AND ProductID = UUID_TO_BIN('${productID}')`)
     return new Promise(function(resolve, reject) {
         connection.query(`UPDATE Cart_Product
         SET Quantity = Quantity - 1

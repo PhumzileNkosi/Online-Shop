@@ -32,6 +32,8 @@ const getCart = (subject) => {
 }
 
 const removeProductFromCart = (subjectId, productID) => {
+    console.log("Service")
+    console.log(subjectId, productID)
     return new Promise(function(resolve, reject) {
         connect.removeProductFromCart(subjectId, productID)
         .then(function(results) {
