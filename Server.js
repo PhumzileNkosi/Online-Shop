@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 require('dotenv').config();
 const connect = require('./src/helpers/connect');
 const service = require('./src/helpers/service');
+const helmet = require('helmet')
 
 const jsonParser = bodyParser.json()
 const app = express();
@@ -27,6 +28,17 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname,'/public/')))
 app.set('view engine', 'ejs');
 app.use(auth(config));
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      "img-src": ["'self'",
+                  "https://s.gravatar.com",
+                  "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
+    }
+  },
+  crossOriginEmbedderPolicy: false
+}))
+app.disable('x-powered-by')
 
 https.createServer(
   {
@@ -77,11 +89,19 @@ app.get('/api/products', requiresAuth() , (req, res) => {
 app.put('/api/cart', requiresAuth(), jsonParser , (req, res) => {
 
   let request = {
-    item : req.body.item,
+    productID : req.body.item,
     quantity: req.body.quantity,
-    user: req.oidc.user.sub
+    subject: req.oidc.user.sub
   }
 
+  service.addtoCart(request.productID, request.subject, request.quantity)
+  .then(function(results){
+     res.json(results)
+  })
+  .catch(function(err){
+    console.log("Promise rejection error: "+err);
+    res.status(500)
+  })
   console.log(request)
 
   //Add validation on SQL side to check that the user has not inputted an invalid Quantity for item
@@ -112,3 +132,14 @@ app.put('/api/cart/:productID/:userID', (req, res) => {
     console.log("Promise reject error: " + err);
   })
 })
+
+app.get('/api/products/search', requiresAuth(), (req,res)=>{
+  service.getProductsByName(req.query.name)
+    .then(function(results){
+      res.json(results);
+    })
+    .catch(function(err){
+      console.log("Promise rejection error: "+err);
+      res.status(500);
+    })
+});

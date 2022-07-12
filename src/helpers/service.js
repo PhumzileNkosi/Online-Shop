@@ -43,4 +43,27 @@ const removeProductFromCart = (subjectId, productID) => {
     })
 }
 
-module.exports ={getAllProducts: getAllProducts, getCart:getCart, removeProductFromCart: removeProductFromCart}
+const addtoCart = (productID,subject, quantity) => {
+    return new Promise(function(resolve, reject){
+        connect.addToCartNew(productID,subject,quantity)
+        .then(function(results){
+            resolve(results) ; 
+        })
+        .catch(function(err){
+            reject(err);
+        }
+    )})
+}
+const getProductsByName = (name) => {
+    
+    return new Promise(function(resolve, reject){
+        connect.getProductsByName(name)
+        .then(function(results){
+            resolve(results) ; 
+        })
+        .catch(function(err){
+            reject(err);
+        }
+    )})
+}
+module.exports ={getAllProducts: getAllProducts, getCart:getCart, addtoCart, getProductsByName: getProductsByName, removeProductFromCart: removeProductFromCart}

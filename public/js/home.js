@@ -27,7 +27,7 @@ const getUpdateCart = async (event) => {
             body: JSON.stringify(bodyObject)
         };
 
-        fetch('/cart', requestOptions)
+        fetch('/api/cart', requestOptions)
         .then(async response => {
             response.json();
             console.log(response.json())
@@ -88,7 +88,7 @@ const searchProduct = async () =>{
     let search = document.getElementById('productSearch').value ;
     
     if(search.length > 0 ){
-        const response = await fetch('/api/products?' + new URLSearchParams({
+        const response = await fetch('/api/products/search?' + new URLSearchParams({
             name: search
         }))
 
