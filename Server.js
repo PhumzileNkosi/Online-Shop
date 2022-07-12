@@ -29,12 +29,14 @@ app.use(express.static(path.join(__dirname,'/public/')))
 app.set('view engine', 'ejs');
 app.use(auth(config));
 app.use(helmet({
-    contentSecurityPolicy: {
-      directives: {
-        "img-src": ["'self'", "https://s.gravatar.com"]
-      }
-    },
-    crossOriginEmbedderPolicy: false
+  contentSecurityPolicy: {
+    directives: {
+      "img-src": ["'self'",
+                  "https://s.gravatar.com",
+                  "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
+    }
+  },
+  crossOriginEmbedderPolicy: false
 }))
 app.disable('x-powered-by')
 
@@ -48,26 +50,18 @@ https.createServer(
 });
 
 app.get('/', (req,res)=>{
-
   service.getAllProducts()
-    .then(function(results){
-        res.render("pages/home", {
-          title: 'Online Store ',
-          isAuthenticated: req.oidc.isAuthenticated(),
-          user: req.oidc.user,
-          products: results,
-          service: service
-        })
-    })
-    .catch(function(err){
-      console.log("Promise rejection error: "+err);
-    })
+  .then(function(results){
+      res.render("pages/home", {
+        title: 'Online Store ',
+        isAuthenticated: req.oidc.isAuthenticated(),
+        user: req.oidc.user
+      })
+  })
+  .catch(function(err){
+    console.log("Promise rejection error: "+err);
+  })
 })
-
-
-app.get('/profile', requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user, null, 2));
-});
 
 
 app.get('/cart', requiresAuth(), (req, res) => {
@@ -79,7 +73,7 @@ app.get('/cart', requiresAuth(), (req, res) => {
 });
 
 
-app.get('/products', requiresAuth() , (req, res) => {
+app.get('/api/products', requiresAuth() , (req, res) => {
 
     service.getAllProducts()
     .then(function(results){ 
@@ -92,7 +86,7 @@ app.get('/products', requiresAuth() , (req, res) => {
 
 });
 
-app.put('/cart', requiresAuth(), jsonParser , (req, res) => {
+app.put('/api/cart', requiresAuth(), jsonParser , (req, res) => {
 
   let request = {
     item : req.body.item,
@@ -106,3 +100,17 @@ app.put('/cart', requiresAuth(), jsonParser , (req, res) => {
 
 
 })
+
+
+app.get('/api/cart', requiresAuth() , (req, res) => {
+
+  service.getCart(req.oidc.user.sub)
+  .then(function(results){ 
+     res.json(results)
+  })
+  .catch(function(err){
+    console.log("Promise rejection error: "+err);
+    res.status(500)
+  })
+
+});
