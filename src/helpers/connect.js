@@ -70,4 +70,22 @@ let checkoutCart = function(cartID, userID) {
 
 }
 
-module.exports ={connect:connect, getAllProducts: getAllProducts, getUserCart:getUserCart}
+let addToCartNew = function(productID, subject, quantity) {
+    return new Promise(function(resolve, reject){
+        connection.query(
+            `INSERT INTO Cart_Product (ProductID, SubjectID, Quantity)
+            VALUES  (UUID_TO_BIN('${productID}'), '${subject}', ${quantity})
+            ON DUPLICATE KEY UPDATE
+            Quantity = Quantity + VALUES(Quantity)`, 
+            function(err, rows){                                                
+                if(rows === undefined){
+                    reject(new Error("Error rows is undefined"));
+                }else{
+                    resolve(rows);
+                }
+            }
+        )}
+    )
+}
+
+module.exports ={connect:connect, getAllProducts: getAllProducts, getUserCart:getUserCart, addToCartNew}

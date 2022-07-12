@@ -27,7 +27,7 @@ const getUpdateCart = async (event) => {
             body: JSON.stringify(bodyObject)
         };
 
-        fetch('/cart', requestOptions)
+        fetch('/api/cart', requestOptions)
         .then(async response => {
             response.json();
             console.log(response.json())

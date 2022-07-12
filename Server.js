@@ -77,11 +77,19 @@ app.get('/api/products', requiresAuth() , (req, res) => {
 app.put('/api/cart', requiresAuth(), jsonParser , (req, res) => {
 
   let request = {
-    item : req.body.item,
+    productID : req.body.item,
     quantity: req.body.quantity,
-    user: req.oidc.user.sub
+    subject: req.oidc.user.sub
   }
 
+  service.addtoCart(request.productID, request.subject, request.quantity)
+  .then(function(results){
+     res.json(results)
+  })
+  .catch(function(err){
+    console.log("Promise rejection error: "+err);
+    res.status(500)
+  })
   console.log(request)
 
   //Add validation on SQL side to check that the user has not inputted an invalid Quantity for item
