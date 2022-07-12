@@ -17,4 +17,18 @@ const getAllProducts = () => {
     )})
 }
 
-module.exports ={getAllProducts: getAllProducts}
+
+const getCart = (subject) => {
+    
+    return new Promise(function(resolve, reject){
+        connect.getUserCart(subject)
+        .then(function(results){
+            resolve(results) ; 
+        })
+        .catch(function(err){
+            reject(err);
+        }
+    )})
+}
+
+module.exports ={getAllProducts: getAllProducts, getCart:getCart}

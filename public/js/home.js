@@ -13,7 +13,7 @@ window.addEventListener('load', (event) => {
 });
 
 const getAllProducts = async () => {
-    const response = await fetch('/products');
+    const response = await fetch('/api/products');
     const myJson = await response.json();
     console.log(myJson)
 }
