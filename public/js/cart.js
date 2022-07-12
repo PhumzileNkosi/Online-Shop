@@ -37,8 +37,8 @@ const generateCartHtml = (products) => {
         `;
     })
 
-    document.getElementById('productRow').innerHTML = newHTML;
-    document.getElementById('cartTotal').innerHTML = 'Items( ' + products.length + ' )';
+    document.getElementById('productRow').innerHTML = DOMPurify.sanitize(newHTML);
+    document.getElementById('cartTotal').innerHTML = DOMPurify.sanitize('Items( ' + products.length + ' )');
 
     if(products.length == 0 ){
         document.getElementById('notification').innerHTML = 'Start adding items to your cart to see them here' ; 

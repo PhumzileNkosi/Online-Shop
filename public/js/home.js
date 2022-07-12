@@ -39,7 +39,7 @@ const getUpdateCart = async (event) => {
 
         })
         .catch(error => {
-            element.parentElement.innerHTML = `Error: ${error}`;
+            element.parentElement.innerHTML = DOMPurify.sanitize(`Error: ${error}`);
             console.error('There was an error!', error);
         });
    
@@ -69,7 +69,7 @@ const generateProductDisplay = async (products) => {
         `
     })
 
-    document.getElementById('productsRow').innerHTML = newHtml ;
+    document.getElementById('productsRow').innerHTML = DOMPurify.sanitize(newHtml) ;
 
 
     const cartIcons  = document.querySelectorAll('.cartImg');
