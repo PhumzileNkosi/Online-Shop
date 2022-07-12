@@ -70,6 +70,19 @@ h2{
   clear: both;
 }
 
+#productSearch{
+  margin-bottom: 2em;
+  margin-left: 2em;
+  width: 20%;
+  font-size: medium;
+}
+
+#searchButton{
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
 
 @media only screen and (max-width: 900px) {
   .column {
@@ -86,6 +99,11 @@ h2{
   .card{
     max-height: 25em;
   }
+
+  
+  #productSearch{
+    width: 40%;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -96,6 +114,25 @@ h2{
 
   .card{
     max-height: 30em;
+  }
+
+  #productSearch{
+    width: 80%;
+    margin-left: 0.5em;
+  }
+
+  h1{
+    margin-left: 0.5em;
+  }
+  
+  h2{
+    margin-left: 1em;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  #productSearch{
+    width: 85%;
   }
 }
 
