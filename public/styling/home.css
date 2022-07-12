@@ -1,3 +1,7 @@
+body{
+  font-family: 'Courier New', Courier, monospace;
+}
+
 .topnav {
     background-color: #333;
     overflow: hidden;
@@ -49,6 +53,18 @@ nav{
     margin-left: 0.5em;
   }
 
+h1{
+  margin-left: 2em;
+}
+
+h2{
+  margin-left: 2.5em;
+}
+
+
+h2{
+  color: blueviolet;
+}
 
 .productSection{
   
@@ -131,4 +147,40 @@ nav{
   .card{
     max-height: 30em;
   }
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
