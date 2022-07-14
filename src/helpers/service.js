@@ -31,6 +31,17 @@ const getCart = (subject) => {
     )})
 }
 
+const removeProductFromCart = (subjectId, productID) => {
+    return new Promise(function(resolve, reject) {
+        connect.removeProductFromCart(subjectId, productID)
+        .then(function(results) {
+            resolve(results);
+        })
+        .catch(function(err) {
+            reject(err);
+        })
+    })
+}
 
 const addtoCart = (productID,subject, quantity) => {
     return new Promise(function(resolve, reject){
@@ -55,4 +66,4 @@ const getProductsByName = (name) => {
         }
     )})
 }
-module.exports ={getAllProducts: getAllProducts, getCart:getCart, addtoCart, getProductsByName: getProductsByName}
+module.exports ={getAllProducts: getAllProducts, getCart:getCart, addtoCart, getProductsByName: getProductsByName, removeProductFromCart: removeProductFromCart}

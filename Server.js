@@ -127,6 +127,17 @@ app.get('/api/cart', requiresAuth() , (req, res) => {
   })
 
 });
+
+app.put('/api/cart/:productID', requiresAuth(), (req, res) => {
+  service.removeProductFromCart(req.oidc.user.sub, req.params.productID)
+  .then(function(results){
+    res.json(results)
+  })
+  .catch(function(err){
+    console.log("Promise reject error: " + err);
+  })
+})
+
 app.get('/api/products/search', requiresAuth(), (req,res)=>{
   service.getProductsByName(req.query.name)
     .then(function(results){
