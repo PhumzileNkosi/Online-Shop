@@ -16,5 +16,4 @@
    - You will most likely see a safety warning, please click on the Advanced button and procees to the url.
    - Voila, you should be seeing our store products and it means the project is running.
 ## Deployment 
-
-- Add diagrams
+https://lucid.app/documents/view/17296b58-06cb-4171-af3b-57794bf1f545
